@@ -5,6 +5,15 @@ public class Mark {
     private String description;
     private Double score;
 
+    public Mark() { }
+
+    public Mark(Long id, String description,Double score) {
+        this.id = id;
+        this.score = score;
+        this.description = description;
+    }
+
+
     public Long getId() {
         return id;
     }
@@ -29,5 +38,12 @@ public class Mark {
         this.description = description;
     }
 
-
+    @Override
+    public String toString() {
+        return "Mark{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", score=" + score +
+                '}';
+    }
 }
