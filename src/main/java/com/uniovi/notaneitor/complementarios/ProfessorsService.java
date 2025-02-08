@@ -8,6 +8,7 @@ import java.util.List;
 public class ProfessorsService {
 
     private List<Professor> professors = new ArrayList<>();
+    Long contadorId = 1L;
 
     // Obtener la lista de profesores
     public List<Professor> getProfessorsList() {
@@ -25,7 +26,10 @@ public class ProfessorsService {
     }
 
     public void addProfessor(Professor professor) {
+
+        professor.setId(contadorId);
         professors.add(professor);
+        contadorId++;
     }
 
     public void deleteProfessor(Long id) {

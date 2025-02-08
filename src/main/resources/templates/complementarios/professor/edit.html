@@ -1,7 +1,7 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Notaneitor - Agregar Profesor</title>
+    <title>Notaneitor</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- Bootstrap CSS -->
@@ -9,7 +9,7 @@
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <!-- JS files: jQuery primero y luego Bootstrap JS -->
+    <!-- JS files: jQuery first, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
@@ -17,76 +17,90 @@
 
 <!-- Barra de Navegación superior -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#"></a>
-    <img src="/images/student-48.png" alt="logo"/>
+    <a class="navbar-brand" href="#">
+        <img src="/images/student-48.png" alt="logo"/>
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
             aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="my-navbarColor02">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item ">
-                <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false"> Gestión de profesores
+                   aria-haspopup="true" aria-expanded="false"> Gestión de notas
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/professor/list">Ver profesores</a>
-                    <a class="dropdown-item" href="/professor/add">Agregar Profesor</a>
+                    <a class="dropdown-item" href="/mark/list">Ver Notas</a>
+                    <a class="dropdown-item" href="/mark/add">Agregar Nota</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/mark/filter">Filtrar</a>
                 </div>
             </li>
-        </ul>
-        <ul class="navbar-nav justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link" href="/registrarse">
-                    <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    Registrate</a>
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="profesorDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"> Gestión de profesores
+                </a>
+                <div class="dropdown-menu" aria-labelledby="profesorDropdown">
+                    <a class="dropdown-item" href="/professor/list">Ver profesores</a>
+                    <a class="dropdown-item" href="/professor/add">Añadir profesor</a>
+                </div>
             </li>
-            <li class="nav-item"><a class="nav-link" href="/identificarse">
-                <i class='fas fa-sign-in-alt' style='font-size:16px'></i>
-                Identifícate</a></li>
         </ul>
     </div>
 </nav>
 
+<!-- Contenido principal -->
 <div class="container" id="main-container">
-    <h2>Agregar Profesor</h2>
-    <form class="form-horizontal" method="get" action="/professor/add">
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="id">ID:</label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" id="id" name="id" placeholder="Ejemplo: 1" required />
-            </div>
-        </div>
+    <h2>Editar Profesor</h2>
+    <form class="form-horizontal" method="post" action="/professor/edit">
+
+        <!-- Campo oculto para enviar el ID del profesor (no se muestra en la interfaz) -->
+        <input type="hidden" name="id" th:value="${professor.id}" />
+
+        <!-- DNI -->
         <div class="form-group">
             <label class="control-label col-sm-2" for="DNI">DNI:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="DNI" name="DNI" placeholder="Ejemplo: 12345678A" required />
+                <input id="DNI" th:value="${professor.DNI}" type="text" class="form-control" name="DNI"
+                       placeholder="Ejemplo: 12345678A" required="true"/>
             </div>
         </div>
+
+        <!-- Nombre -->
         <div class="form-group">
             <label class="control-label col-sm-2" for="name">Nombre:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Ejemplo: Juan" required />
+                <input id="name" th:value="${professor.name}" type="text" class="form-control" name="name"
+                       placeholder="Ejemplo: Juan" required="true"/>
             </div>
         </div>
+
+        <!-- Apellidos -->
         <div class="form-group">
             <label class="control-label col-sm-2" for="surname">Apellidos:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="surname" name="surname" placeholder="Ejemplo: Pérez López" required />
+                <input id="surname" th:value="${professor.surname}" type="text" class="form-control" name="surname"
+                       placeholder="Ejemplo: Pérez López" required="true"/>
             </div>
         </div>
+
+        <!-- Categoría -->
         <div class="form-group">
             <label class="control-label col-sm-2" for="categoria">Categoría:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="categoria" name="categoria" placeholder="Ejemplo: Matemáticas" required />
+                <input id="categoria" th:value="${professor.categoria}" type="text" class="form-control" name="categoria"
+                       placeholder="Ejemplo: Matemáticas" required="true"/>
             </div>
         </div>
+
+        <!-- Botón de enviar -->
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary">Agregar Profesor</button>
+                <button type="submit" class="btn btn-primary">Modificar</button>
             </div>
         </div>
     </form>
