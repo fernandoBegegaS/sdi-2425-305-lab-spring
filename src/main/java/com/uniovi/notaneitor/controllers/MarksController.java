@@ -12,6 +12,11 @@ public class MarksController {
     @Autowired
     private MarksService marksService;
 
+    @RequestMapping("/mark/list/update")
+    public String updateList(Model model) {
+        model.addAttribute("markList", marksService.getMarks());
+        return "mark/list :: marksTable";
+    }
 
     @RequestMapping("mark/list")
     public String getList(Model model) {
