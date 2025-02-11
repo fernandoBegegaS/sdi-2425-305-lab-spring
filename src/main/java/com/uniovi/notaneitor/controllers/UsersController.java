@@ -1,6 +1,9 @@
 package com.uniovi.notaneitor.controllers;
 
+import com.uniovi.notaneitor.services.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +15,46 @@ import com.uniovi.notaneitor.services.UsersService;
 public class UsersController {
 
     private final UsersService usersService;
+    private final SecurityService securityService;
 
     @Autowired
-    public UsersController(UsersService usersService) {
+    public UsersController(UsersService usersService, SecurityService securityService) {
         this.usersService = usersService;
+        this.securityService = securityService;
     }
+
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public String signup(@ModelAttribute("user") User user, Model model) {
+        usersService.addUser(user);
+        securityService.autoLogin(user.getDni(), user.getPasswordConfirm());
+        return "redirect:/home";
+    }
+
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public String signupView() {
+        return "user/signup";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login() {
+        return "user/login";
+    }
+
+    @RequestMapping(value = "/home" , method = RequestMethod.GET)
+    public String home(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth != null && auth.getName() != null) {
+            String dni = auth.getName();
+            User activeUser = usersService.getUserByDni(dni);
+            model.addAttribute("markList", activeUser.getMarks());
+        } else {
+            model.addAttribute("error", "No hay usuario autenticado.");
+        }
+
+        return "user/home";
+    }
+
 
     @RequestMapping("/user/list")
     public String getListado(Model model) {

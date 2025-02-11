@@ -1,6 +1,6 @@
 package com.uniovi.notaneitor.complementarios;
 
-import jakarta.persistence.Entity;
+
 
 import java.util.Objects;
 

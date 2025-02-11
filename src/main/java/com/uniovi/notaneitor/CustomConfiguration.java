@@ -1,3 +1,5 @@
+package com.uniovi.notaneitor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -14,7 +16,7 @@ public class CustomConfiguration implements WebMvcConfigurer {
     @Bean
     public SessionLocaleResolver localeResolver() {
         SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-        sessionLocaleResolver.setDefaultLocale(new Locale("es")); // Español por defecto
+        sessionLocaleResolver.setDefaultLocale(new Locale("es","ES")); // Español por defecto
         return sessionLocaleResolver;
     }
 

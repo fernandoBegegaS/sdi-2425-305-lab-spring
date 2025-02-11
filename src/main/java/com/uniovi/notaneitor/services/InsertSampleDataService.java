@@ -2,11 +2,12 @@ package com.uniovi.notaneitor.services;
 
 import java.util.HashSet;
 import java.util.Set;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.uniovi.notaneitor.entities.Mark;
 import com.uniovi.notaneitor.entities.User;
+
+import javax.annotation.PostConstruct;
 
 @Service
 public class InsertSampleDataService {
@@ -22,11 +23,22 @@ public class InsertSampleDataService {
     public void init() {
         // Creación de usuarios de ejemplo
         User user1 = new User("99999990A", "Pedro", "Díaz");
+        user1.setPassword("123456");
+
         User user2 = new User("99999991B", "Lucas", "Núñez");
+        user2.setPassword("123456");
+
         User user3 = new User("99999992C", "María", "Rodríguez");
+        user3.setPassword("123456");
+
         User user4 = new User("99999993D", "Marta", "Almonte");
+        user4.setPassword("123456");
+
         User user5 = new User("99999977E", "Pelayo", "Valdes");
+        user5.setPassword("123456");
+
         User user6 = new User("99999988F", "Edward", "Núñez");
+        user6.setPassword("123456");
 
         // Creación de notas para cada usuario
         Set<Mark> user1Marks = new HashSet<>() {{

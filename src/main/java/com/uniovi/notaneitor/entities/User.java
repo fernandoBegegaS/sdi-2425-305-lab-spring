@@ -1,9 +1,10 @@
 package com.uniovi.notaneitor.entities;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name = "user")
 public class User {
 
     @Id
@@ -16,6 +17,13 @@ public class User {
     private String name;
     private String lastName;
     private String role;
+
+    private String password;
+
+    @Transient
+    private String passwordConfirm;
+
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Mark> marks;
@@ -30,6 +38,24 @@ public class User {
 
     public User() {
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+
 
     public long getId() {
         return id;
