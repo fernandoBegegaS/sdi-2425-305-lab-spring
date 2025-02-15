@@ -1,9 +1,15 @@
 package com.uniovi.notaneitor.complementarios;
 
 import com.uniovi.notaneitor.entities.Mark;
+import com.uniovi.notaneitor.services.MarksService;
+import com.uniovi.notaneitor.services.UsersService;
+import com.uniovi.notaneitor.validators.AddMarkValidator;
+import com.uniovi.notaneitor.validators.AddProfessorValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +20,12 @@ public class ProfessorsController {
     @Autowired
     private ProfessorsService professorsService;
 
+    private final AddProfessorValidator addProfessorValidator;
 
+    public ProfessorsController(ProfessorsService professorsService, AddProfessorValidator addProfessorValidator) {
+        this.professorsService = professorsService;
+        this.addProfessorValidator = addProfessorValidator;
+    }
 
     @RequestMapping("professor/list" )
     public String getList(Model model) {
@@ -23,8 +34,12 @@ public class ProfessorsController {
     }
 
     @RequestMapping(value ="professor/add", method = RequestMethod.POST)
-    public String addProfessor(@ModelAttribute Professor professor) {
+    public String addProfessor(@Validated Professor professor, BindingResult result) {
 
+        addProfessorValidator.validate(professor,result);
+        if (result.hasErrors()) {
+            return "professor/add";
+        }
         professorsService.addProfessor(professor);
         return "redirect:/professor/list";
     }
