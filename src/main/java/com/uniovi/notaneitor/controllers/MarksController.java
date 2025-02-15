@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,14 +23,12 @@ public class MarksController {
 
     private final AddMarkValidator addMarkValidator;
 
-    private final HttpSession httpSession;
 
     public MarksController(MarksService marksService, UsersService usersService,
-                           AddMarkValidator addMarkValidator,HttpSession httpSession) {
+                           AddMarkValidator addMarkValidator) {
         this.marksService = marksService;
         this.usersService = usersService;
         this.addMarkValidator = addMarkValidator;
-        this.httpSession = httpSession;
     }
 
     @RequestMapping("/mark/list/update")
@@ -42,9 +39,6 @@ public class MarksController {
 
     @RequestMapping("mark/list")
     public String getList(Model model) {
-        Set<Mark> consultedList = (Set<Mark>) (httpSession.getAttribute("consultedList") != null ?
-                httpSession.getAttribute("consultedList") : new HashSet<>());
-        model.addAttribute("consultedList", consultedList);
         model.addAttribute("markList", marksService.getMarks());
         return "mark/list";
     }

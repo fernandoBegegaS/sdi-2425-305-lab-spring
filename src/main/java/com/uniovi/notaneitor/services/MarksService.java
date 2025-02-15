@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class MarksService {
@@ -29,15 +31,7 @@ public class MarksService {
     }
 
     public Mark getMark(Long id) {
-        Set<Mark> consultedList = (Set<Mark>) httpSession.getAttribute("consultedList");
-        if (consultedList == null) {
-            consultedList = new HashSet<>();
-        }
-        Mark mark = marksRepository.findById(id).isPresent() ? marksRepository.findById(id).get() : new Mark();
-        consultedList.add(mark);
-        httpSession.setAttribute("consultedList", consultedList);
-        return mark;
-
+        return marksRepository.findById(id).get();
     }
 
     public void addMark(Mark mark) {
