@@ -1,5 +1,6 @@
 package com.uniovi.notaneitor.controllers;
 
+import com.uniovi.notaneitor.entities.Mark;
 import com.uniovi.notaneitor.services.SecurityService;
 import com.uniovi.notaneitor.validators.SignUpFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,13 @@ public class UsersController {
     public String signupView(Model model) {
         model.addAttribute("user", new User());
         return "user/signup";
+    }
+
+
+    @RequestMapping("/user/list/update")
+    public String updateList(Model model) {
+        model.addAttribute("usersList", usersService.getUsers());
+        return "user/list :: usersTable";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -100,6 +108,9 @@ public class UsersController {
         return "redirect:/user/list";
     }
 
+
+
+
     @RequestMapping(value = "/user/edit/{id}")
     public String getEdit(Model model, @PathVariable Long id) {
         User user = usersService.getUser(id);
@@ -108,8 +119,12 @@ public class UsersController {
     }
 
     @RequestMapping(value = "/user/edit/{id}", method = RequestMethod.POST)
-    public String setEdit(@PathVariable Long id, @ModelAttribute User user) {
-        usersService.addUser(user);
-        return "redirect:/user/details/" + id;
+    public String setEdit(@ModelAttribute User user, @PathVariable Long id) {
+        User ogUser = usersService.getUser(id);
+        ogUser.setDni(user.getDni());
+        ogUser.setName(user.getName());
+        ogUser.setLastName(user.getLastName());
+        usersService.addUser(ogUser);
+        return "redirect:/user/list";
     }
 }
