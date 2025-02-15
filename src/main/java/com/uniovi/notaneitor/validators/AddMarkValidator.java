@@ -21,14 +21,16 @@ public class AddMarkValidator implements Validator {
         // Validar descripción: no vacía y mínimo 20 caracteres
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "Error.empty");
         if (mark.getDescription() != null && mark.getDescription().trim().length() < 20) {
-            errors.rejectValue("description", "Error.mark.description.length");
+            errors.rejectValue("description", "Error.mark.description.length",
+                    "La descripcion debe ser 20 caracteres de largo");
         }
 
         // Validar puntuación: debe estar entre 0 y 10
         if (mark.getScore() == null) {
             errors.rejectValue("score", "Error.empty");
         } else if (mark.getScore() < 0 || mark.getScore() > 10) {
-            errors.rejectValue("score", "Error.mark.score.range");
+            errors.rejectValue("score", "Error.mark.score.range" ,
+                    "La score debe ser 0 a 10");
         }
     }
 }

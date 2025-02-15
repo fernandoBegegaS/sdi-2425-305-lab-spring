@@ -19,15 +19,15 @@ public class AddProfessorValidator implements Validator {
         Professor professor = (Professor) target;
 
         // Validar DNI: no vacío, longitud exacta de 9, y último carácter debe ser una letra
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "DNI", "Error.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dni", "Error.empty");
         if (professor.getDNI() != null) {
             String dni = professor.getDNI().trim();
             if (dni.length() != 9) {
-                errors.rejectValue("DNI", "Error.professor.DNI.length");
+                errors.rejectValue("dni", "Error.professor.dni.length");
             } else {
                 char lastChar = dni.charAt(dni.length() - 1);
                 if (!Character.isLetter(lastChar)) {
-                    errors.rejectValue("DNI", "Error.professor.DNI.lastCharacter");
+                    errors.rejectValue("dni", "Error.professor.dni.lastCharacter");
                 }
             }
         }
@@ -39,9 +39,9 @@ public class AddProfessorValidator implements Validator {
         }
 
         // Validar Apellidos: no vacío y sin espacios en blanco al inicio o final
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "Error.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "Error.empty");
         if (professor.getSurname() != null && !professor.getSurname().equals(professor.getSurname().trim())) {
-            errors.rejectValue("surname", "Error.professor.surname.whitespace");
+            errors.rejectValue("lastName", "Error.professor.lastName.whitespace");
         }
     }
 }
