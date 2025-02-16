@@ -54,6 +54,7 @@ public class InsertSampleDataService {
             add(new Mark("Nota A3", 7.0, user1));
             add(new Mark("Nota A4", 6.5, user1));
         }};
+
         user1.setMarks(user1Marks);
 
         Set<Mark> user2Marks = new HashSet<>() {{

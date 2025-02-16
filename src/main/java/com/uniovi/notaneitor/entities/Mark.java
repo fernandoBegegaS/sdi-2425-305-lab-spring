@@ -25,6 +25,13 @@ public class Mark {
     }
 
     public Mark(String description,Double score,User user) {
+
+        this.score = score;
+        this.description = description;
+        this.user = user;
+    }
+
+    public Mark(Long id, String description,Double score,User user) {
         this.id = id;
         this.score = score;
         this.description = description;
@@ -80,11 +87,11 @@ public class Mark {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Mark mark = (Mark) o;
-        return Objects.equals(id, mark.id);
+        return Objects.equals(id, mark.id) && Objects.equals(description, mark.description) && Objects.equals(score, mark.score) && Objects.equals(user, mark.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hash(id, description, score, user);
     }
 }
