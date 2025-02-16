@@ -43,13 +43,26 @@ public class MarksController {
         return "mark/list :: marksTable";
     }
 
-    @RequestMapping("mark/list")
-    public String getList(Model model , Principal principal) {
+    @RequestMapping("/mark/list")
+    public String getList(
+            Model model,
+            Principal principal,
+            @RequestParam(value = "", required = false) String searchText
+    ) {
         String dni = principal.getName(); // DNI es el name de la autenticación
         User user = usersService.getUserByDni(dni);
-        model.addAttribute("marksList", marksService.getMarksForUser(user));
+
+        if (searchText != null && !searchText.isEmpty()) {
+            model.addAttribute("marksList",
+                    marksService.searchMarksByDescriptionAndNameForUser(searchText, user));
+        } else {
+            model.addAttribute("marksList",
+                    marksService.getMarksForUser(user));
+        }
+
         return "mark/list";
     }
+
 
     @RequestMapping(value = "mark/add", method = RequestMethod.POST)
     public String setMark(@Validated Mark mark , BindingResult result) {
