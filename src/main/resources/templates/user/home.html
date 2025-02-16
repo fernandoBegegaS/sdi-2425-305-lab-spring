@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head th:replace="fragments/head"/>
 <body>
@@ -12,7 +13,7 @@
 
     <p>
         Usuario Autenticado como:
-        <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
+        <b th:inline="text" sec:authentication="principal.username"></b>
     </p>
     <p>Notas del usuario</p>
 
@@ -37,10 +38,10 @@
                     <a th:href="@{'/mark/details/' + ${mark.id}}">Detalles</a>
                 </td>
                 <td>
-                    <a th:href="@{'/mark/edit/' + ${mark.id}}">Modificar</a>
+                    <a  sec:authorize="hasRole('ROLE_PROFESSOR')" th:href="@{'/mark/edit/' + ${mark.id}}">Modificar</a>
                 </td>
                 <td>
-                    <a th:href="@{'/mark/delete/' + ${mark.id}}">Eliminar</a>
+                    <a  sec:authorize="hasRole('ROLE_PROFESSOR')" th:href="@{'/mark/delete/' + ${mark.id}}">Eliminar</a>
                 </td>
             </tr>
             </tbody>
