@@ -48,7 +48,7 @@ public class MarksController {
 
     @RequestMapping("/mark/list")
     public String getList(
-            Model model,
+            Model model  ,
             Pageable pageable,
             Principal principal,
             @RequestParam(value = "", required = false) String searchText
