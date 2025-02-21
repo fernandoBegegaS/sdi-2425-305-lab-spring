@@ -41,7 +41,7 @@ public class MarksController {
 
     @RequestMapping(value = "mark/add", method = RequestMethod.POST)
     public String setMark(@Validated Mark mark , BindingResult result) {
-        addMarkValidator.validate(mark,result);
+        addMarkValidator.validate(new Mark(),result);
         if (result.hasErrors()) {
             return "mark/add";
         }
