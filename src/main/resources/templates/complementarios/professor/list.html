@@ -42,11 +42,13 @@
             <li class="nav-item">
                 <a class="nav-link" href="/registrarse">
                     <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    Registrate</a>
+                    Regístrate</a>
             </li>
-            <li class="nav-item"><a class="nav-link" href="/identificarse">
-                <i class='fas fa-sign-in-alt' style='font-size:16px'></i>
-                Identifícate</a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="/identificarse">
+                    <i class='fas fa-sign-in-alt' style='font-size:16px'></i>
+                    Identifícate</a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -62,7 +64,7 @@
                 <th scope="col">DNI</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Apellidos</th>
-                <th scope="col">Categoría</th>
+                <th scope="col">Rol</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -71,10 +73,13 @@
             <tbody>
             <tr th:each="professor : ${professorList}">
                 <td scope="row" th:text="${professor.id}">1</td>
-                <td th:text="${professor.DNI}">12345678A</td>
+                <!-- Usamos professor.dni en minúsculas -->
+                <td th:text="${professor.dni}">12345678A</td>
                 <td th:text="${professor.name}">Juan</td>
-                <td th:text="${professor.surname}">Pérez</td>
-                <td th:text="${professor.categoria}">Matemáticas</td>
+                <!-- Usamos professor.lastName para el apellido -->
+                <td th:text="${professor.lastName}">Pérez</td>
+                <!-- Aquí se muestra el rol definido en la entidad -->
+                <td th:text="${professor.role}">Profesor</td>
                 <td><a th:href="@{'details/' + ${professor.id}}">Detalles</a></td>
                 <td><a th:href="@{'edit/' + ${professor.id}}">Modificar</a></td>
                 <td><a th:href="@{'delete/' + ${professor.id}}">Eliminar</a></td>
@@ -82,7 +87,7 @@
             </tbody>
         </table>
     </div>
-    <div th:if="${#lists.isEmpty(professorList)}"> No hay profesores registrados </div>
+    <div th:if="${#lists.isEmpty(professorList)}">No hay profesores registrados</div>
 </div>
 
 </body>

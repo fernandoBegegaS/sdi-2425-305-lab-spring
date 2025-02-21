@@ -42,9 +42,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/css/**", "/images/**", "/script/**", "/", "/signup", "/login/**").permitAll()
-                .antMatchers("/mark/add").hasAuthority("ROLE_PROFESSOR")
-                .antMatchers("/mark/edit/*").hasAuthority("ROLE_PROFESSOR")
-                .antMatchers("/mark/delete/*").hasAuthority("ROLE_PROFESSOR")
+                // Rutas para professor (solo ADMIN para add, edit y delete)
+                .antMatchers("/professor/add").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/professor/edit/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/professor/delete/**").hasAuthority("ROLE_ADMIN")
+                // Rutas para professor: detail accesible a ADMIN y PROFESSOR
+                .antMatchers("/professor/detail/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_PROFESSOR")
+                // La lista de professors es accesible para todos
+                .antMatchers("/professor/list").permitAll()
+                // Otras rutas
                 .antMatchers("/mark/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_PROFESSOR", "ROLE_ADMIN")
                 .antMatchers("/user/**").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
@@ -56,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
-
     }
+
 }
 

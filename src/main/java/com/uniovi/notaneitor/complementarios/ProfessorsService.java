@@ -1,5 +1,7 @@
 package com.uniovi.notaneitor.complementarios;
 
+import com.uniovi.notaneitor.entities.User;
+import com.uniovi.notaneitor.repositories.UsersRepository;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +11,15 @@ public class ProfessorsService {
 
     private List<Professor> professors = new ArrayList<>();
     Long contadorId = 1L;
+    private final UsersRepository usersRepository;
 
+    public ProfessorsService(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
+    }
     // Obtener la lista de profesores
-    public List<Professor> getProfessorsList() {
-        return professors;
+    public List<User> getProfessorsList() {
+
+        return usersRepository.findByRole("ROLE_PROFESSOR");
     }
 
     // Obtener un profesor por ID

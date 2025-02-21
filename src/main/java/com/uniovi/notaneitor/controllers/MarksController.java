@@ -41,7 +41,7 @@ public class MarksController {
         User user = usersService.getUserByDni(dni);
         Page<Mark> marks = marksService.getMarksForUser(pageable,user);
         model.addAttribute("marksList", marks.getContent());
-
+        model.addAttribute("page",marks);
 
         return "mark/list :: marksTable";
     }

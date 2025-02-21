@@ -1,5 +1,6 @@
 package com.uniovi.notaneitor;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +18,12 @@ import java.util.Locale;
 public class CustomConfiguration implements WebMvcConfigurer {
 
 
+    @Value("${default.page:0}")
+    private int page;
+
+    @Value("${default.size:2}")
+    private int size;
+
     @Bean
     public SessionLocaleResolver localeResolver() {
         SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
@@ -26,8 +33,7 @@ public class CustomConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        int page = 0;
-        int size = 5;
+
         PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
         resolver.setFallbackPageable(PageRequest.of(page, size));
         argumentResolvers.add(resolver);
