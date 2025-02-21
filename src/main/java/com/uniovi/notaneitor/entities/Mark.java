@@ -21,7 +21,7 @@ public class Mark {
     public Mark(Long id, String description,Double score) {
         this.id = id;
         this.score = score;
-        this.description = description;
+        this.description =  description;
     }
 
     public Mark(String description,Double score,User user) {
