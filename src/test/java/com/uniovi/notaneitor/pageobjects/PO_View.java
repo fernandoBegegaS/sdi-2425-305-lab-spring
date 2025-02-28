@@ -3,6 +3,7 @@ package com.uniovi.notaneitor.pageobjects;
 import java.util.List;
 
 import com.uniovi.notaneitor.util.SeleniumUtils;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -48,6 +49,7 @@ public class PO_View {
 	 * @return Se retornará la lista de elementos resultantes de la búsqueda.
 	 */
 	static public List<WebElement> checkElementBy(WebDriver driver, String type, String text) {
-		return  SeleniumUtils.waitLoadElementsBy(driver, type, text, getTimeout());
+		List<WebElement> elements = SeleniumUtils.waitLoadElementsBy(driver, type, text, getTimeout());;
+		return elements;
 	}
 }

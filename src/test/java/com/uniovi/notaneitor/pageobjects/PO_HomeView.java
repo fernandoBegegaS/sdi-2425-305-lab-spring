@@ -1,6 +1,7 @@
 package com.uniovi.notaneitor.pageobjects;
 
 import com.uniovi.notaneitor.util.SeleniumUtils;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -33,6 +34,21 @@ public class PO_HomeView extends PO_NavView{
 
         // Esperamos a que se cargue el saludo de bienvenida en Español
         PO_HomeView.checkWelcomeToPage(driver, locale1);
+    }
+
+
+
+    static public void login(WebDriver driver, String dni, String password) {
+        PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+        PO_LoginView.fillLoginForm(driver, dni, password);
+
+    }
+
+    static public void checkIdentificate(WebDriver driver) {
+
+        String checkText = "Identifícate";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
     }
 
 

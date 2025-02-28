@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.List;
+
 public class PO_PrivateView extends PO_NavView {
     static public void fillFormAddMark(WebDriver driver, int userOrder, String descriptionp, String scorep) {
         // Esperamos 5 segundos a que cargue el DOM porque en algunos equipos falla
@@ -26,5 +28,24 @@ public class PO_PrivateView extends PO_NavView {
 
         By boton = By.className("btn");
         driver.findElement(boton).click();
+    }
+
+
+    static public void logut(WebDriver driver) {
+
+        String loginText = PO_HomeView.getP().getString("signup.message", PO_Properties.getSPANISH());
+        PO_PrivateView.clickOption(driver, "logout", "text", loginText);
+
+    }
+
+
+    static public void click(WebDriver driver, String str, String path) {
+        List<WebElement> elements  = PO_View.checkElementBy(driver, str, path);
+        elements.get(0).click();
+    }
+
+    static public void click(WebDriver driver, String str, String path, int index) {
+        List<WebElement> elements  = PO_View.checkElementBy(driver, str, path);
+        elements.get(index).click();
     }
 }
